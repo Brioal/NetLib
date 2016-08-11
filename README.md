@@ -10,12 +10,15 @@
 		}
 	}
 	
-	```
+	
+```
+
 ##Step 2. Add the dependency
+
 ```
 	dependencies {
 	        compile 'com.github.Brioal:NetLib:1.0'
 	}
 	
 	
-	```
+```
