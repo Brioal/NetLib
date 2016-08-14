@@ -17,7 +17,7 @@
 
 ```
 	dependencies {
-	        compile 'com.github.Brioal:NetLib:1.0'
+	        compile 'com.github.Brioal:NetLib:1.1'
 	}
 	
 	
