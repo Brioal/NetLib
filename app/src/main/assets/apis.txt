@@ -1,0 +1,20 @@
+[
+    {
+     "Key": "dream",
+     "Expires": 3000000,
+      "IsGet": true,
+      "Url": "http://v.juhe.cn/dream/category"
+    },
+    {
+     "Key": "q",
+     "Expires": 300,
+      "IsGet": false,
+      "Url": "http://www.baidu.com"
+    },
+    {
+     "Key": "LZULogin",
+     "Expires": 0,
+      "IsGet": false,
+      "Url": "http://jwk.lzu.edu.cn/academic/index.jsp"
+    }
+]
