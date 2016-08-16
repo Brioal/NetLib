@@ -1,5 +1,6 @@
 package com.brioal.net.operator;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -29,11 +30,13 @@ public class APIRequest implements Runnable {
     private URL mURL;
     private InputStream mInputStream;
     private HttpURLConnection mConnection;
+    private Handler mHandler;
 
     public APIRequest(ArrayList<RequestParameter> parameters, APIData APIData, RequestCallback callback) {
         mParameters = parameters;
         mAPIData = APIData;
         mCallback = callback;
+        mHandler = new Handler();
     }
 
     private String getParamters() {
@@ -82,20 +85,36 @@ public class APIRequest implements Runnable {
             while ((str = br.readLine()) != null) {
                 stringBuilder.append(str);
             }
-            String result = stringBuilder.toString();
+            final String result = stringBuilder.toString();
             if (!TextUtils.isEmpty(result)) {
                 if (mCallback != null) {
-                    mCallback.onSuccess(result, mAPIData.getUrl() + "?" + getParamters(), mAPIData.getExpires());
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onSuccess(result, mAPIData.getUrl() + "?" + getParamters(), mAPIData.getExpires());
+                        }
+                    });
                 } else {
-                    mCallback.onFail("获取结果出错");
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onFail("网路请求失败");
+                        }
+                    });
                 }
             }
         } catch (Exception eio) {
             if (mCallback != null) {
-                mCallback.onFail("网路请求失败");
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCallback.onFail("网路请求失败");
+                    }
+                });
             }
         }
     }
+
 
     public void stop() {
         if (mConnection != null) {
