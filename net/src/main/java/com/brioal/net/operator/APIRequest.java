@@ -66,8 +66,6 @@ public class APIRequest implements Runnable {
             }
         }
         try {
-
-
             mURL = new URL(mAPIData.getUrl());
             mConnection = (HttpURLConnection) mURL.openConnection();
             mConnection.setDoOutput(true);
@@ -87,7 +85,6 @@ public class APIRequest implements Runnable {
                 pw.flush();
                 pw.close();
             }
-
             mInputStream = mConnection.getInputStream();
             InputStreamReader reader = new InputStreamReader(mInputStream, type);
             BufferedReader br = new BufferedReader(reader);
@@ -102,7 +99,7 @@ public class APIRequest implements Runnable {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mCallback.onSuccess(result, mAPIData.getUrl() + "?" + getParamters(), mAPIData.getExpires());
+                            mCallback.onSuccess(result, mAPIData.getUrl() + "?" + (mParameters == null ? "" : getParamters()), mAPIData.getExpires());
                         }
                     });
                 } else {
