@@ -67,7 +67,7 @@ public class APIRequest implements Runnable {
         }
         try {
 
-            String params = getParamters();
+
             mURL = new URL(mAPIData.getUrl());
             mConnection = (HttpURLConnection) mURL.openConnection();
             mConnection.setDoOutput(true);
@@ -80,10 +80,14 @@ public class APIRequest implements Runnable {
             }
             mConnection.setDoOutput(true);
             mConnection.setDoInput(true);
-            PrintWriter pw = new PrintWriter(mConnection.getOutputStream());
-            pw.print(params);
-            pw.flush();
-            pw.close();
+            if (mParameters != null) {
+                String params = getParamters();
+                PrintWriter pw = new PrintWriter(mConnection.getOutputStream());
+                pw.print(params);
+                pw.flush();
+                pw.close();
+            }
+
             mInputStream = mConnection.getInputStream();
             InputStreamReader reader = new InputStreamReader(mInputStream, type);
             BufferedReader br = new BufferedReader(reader);
