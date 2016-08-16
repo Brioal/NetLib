@@ -98,7 +98,7 @@ public class APIRequest implements Runnable {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mCallback.onFail("网路请求失败");
+                            mCallback.onFail("网路请求失败,请重试");
                         }
                     });
                 }
@@ -108,7 +108,7 @@ public class APIRequest implements Runnable {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        mCallback.onFail("网路请求失败");
+                        mCallback.onFail("网路请求失败,请重试");
                     }
                 });
             }
