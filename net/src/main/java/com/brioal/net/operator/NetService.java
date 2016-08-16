@@ -39,4 +39,12 @@ public class NetService {
         DefaultThreadPool.makeRequest(request);
         return null;
     }
+
+    //调用API请求 Context
+    public String invoke(APIData apiData, ArrayList<RequestParameter> parameters, RequestCallback callback) {
+        APIRequest request = new APIRequest(parameters, apiData, callback);
+        RequestManager.addRequest(request);
+        DefaultThreadPool.makeRequest(request);
+        return null;
+    }
 }
