@@ -2,7 +2,7 @@ package com.brioal.net.util;
 
 import android.content.Context;
 
-import com.brioal.net.entity.URLData;
+import com.brioal.net.entity.APIData;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,14 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * API地址管理类,从xml文件中提取APi信息
+ * API地址管理类,从xml文件中提取APi信息 模板如下
+ *
+ [
+    {
+        "Key": "dream",
+        "Expires": 3000000,
+        "IsGet": true,
+        "Url": "http://v.juhe.cn/dream/category"
+    }
+    ]
  * Created by Brioal on 2016/8/13.
  */
 
-public class UrlConfigManager {
-    private static List<URLData> sDatas;
+public class ApiManager {
+    private static List<APIData> sDatas;
 
-    public static URLData findUrl(Context context, String urlKey, String path) {
+    public static APIData findUrl(Context context, String urlKey, String path) {
         if (sDatas == null) {
             sDatas = fetchDataFrom(context, path);
         }
@@ -32,8 +41,8 @@ public class UrlConfigManager {
         return null;
     }
 
-    private static List<URLData> fetchDataFrom(Context context, String filename) {
-        List<URLData> list = new ArrayList<>();
+    private static List<APIData> fetchDataFrom(Context context, String filename) {
+        List<APIData> list = new ArrayList<>();
         InputStreamReader streamReader = null;
         try {
             streamReader = new InputStreamReader(context.getResources().getAssets().open(filename));
@@ -47,7 +56,7 @@ public class UrlConfigManager {
             JSONArray array = new JSONArray(jsonStr);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
-                URLData data = new URLData(object.getString("Key"), object.getInt("Expires"), object.getBoolean("IsGet"), object.getString("Url"));
+                APIData data = new APIData(object.getString("Key"), object.getInt("Expires"), object.getBoolean("IsGet"), object.getString("Url"));
                 list.add(data);
             }
         } catch (Exception e) {

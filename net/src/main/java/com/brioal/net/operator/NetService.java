@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.brioal.net.callback.RequestCallback;
 import com.brioal.net.entity.RequestParameter;
-import com.brioal.net.entity.URLData;
-import com.brioal.net.util.UrlConfigManager;
+import com.brioal.net.entity.APIData;
+import com.brioal.net.util.ApiManager;
 
 import java.util.ArrayList;
 
@@ -13,17 +13,17 @@ import java.util.ArrayList;
  * Created by Brioal on 2016/8/13.
  */
 
-public class RemoteService {
-    private static RemoteService sRemoteService;
+public class NetService {
+    private static NetService sNetService;
 
     private static String mXMlName;
     private static Context mContext;
 
-    public static RemoteService getInstance() {
-        if (sRemoteService == null) {
-            sRemoteService = new RemoteService();
+    public static NetService getInstance() {
+        if (sNetService == null) {
+            sNetService = new NetService();
         }
-        return sRemoteService;
+        return sNetService;
     }
 
     public static void inited(Context context, String xmlName) {
@@ -33,8 +33,8 @@ public class RemoteService {
 
     //调用API请求 Context
     public String invoke(String mApiKey, ArrayList<RequestParameter> parameters, RequestCallback callback) {
-        URLData urlData = UrlConfigManager.findUrl(mContext, mApiKey, mXMlName);
-        HttpRequest request = new HttpRequest(parameters, urlData, callback);
+        APIData APIData = ApiManager.findUrl(mContext, mApiKey, mXMlName);
+        APIRequest request = new APIRequest(parameters, APIData, callback);
         RequestManager.addRequest(request);
         DefaultThreadPool.makeRequest(request);
         return null;

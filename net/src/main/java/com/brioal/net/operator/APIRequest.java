@@ -6,7 +6,7 @@ import android.util.Log;
 import com.brioal.net.cache.CacheManager;
 import com.brioal.net.callback.RequestCallback;
 import com.brioal.net.entity.RequestParameter;
-import com.brioal.net.entity.URLData;
+import com.brioal.net.entity.APIData;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -21,18 +21,18 @@ import java.util.ArrayList;
  * Created by Brioal on 2016/8/13.
  */
 
-public class HttpRequest implements Runnable {
+public class APIRequest implements Runnable {
     public static String type = "GBk";
     private ArrayList<RequestParameter> mParameters;
     private RequestCallback mCallback;
-    private URLData mURLData;
+    private APIData mAPIData;
     private URL mURL;
     private InputStream mInputStream;
     private HttpURLConnection mConnection;
 
-    public HttpRequest(ArrayList<RequestParameter> parameters, URLData urlData, RequestCallback callback) {
+    public APIRequest(ArrayList<RequestParameter> parameters, APIData APIData, RequestCallback callback) {
         mParameters = parameters;
-        mURLData = urlData;
+        mAPIData = APIData;
         mCallback = callback;
     }
 
@@ -51,19 +51,19 @@ public class HttpRequest implements Runnable {
     @Override
     public void run() { //缓存时间内获取本地缓存
         try {
-            String json = CacheManager.getInstance().getCache(mURLData.getUrl() + "?" + getParamters(), true);
+            String json = CacheManager.getInstance().getCache(mAPIData.getUrl() + "?" + getParamters(), true);
             if (json != null) {
-                mCallback.onSuccess(json, mURLData.getUrl() + "?" + getParamters(), mURLData.getExpires());
+                mCallback.onSuccess(json, mAPIData.getUrl() + "?" + getParamters(), mAPIData.getExpires());
                 Log.i("Run", "return cache");
                 return;
             }
             String params = getParamters();
-            mURL = new URL(mURLData.getUrl());
+            mURL = new URL(mAPIData.getUrl());
             mConnection = (HttpURLConnection) mURL.openConnection();
             mConnection.setDoOutput(true);
             mConnection.setConnectTimeout(5000);
             mConnection.setReadTimeout(5000);
-            if (mURLData.isGet()) {
+            if (mAPIData.isGet()) {
                 mConnection.setRequestMethod("GET");
             } else {
                 mConnection.setRequestMethod("POST");
@@ -85,7 +85,7 @@ public class HttpRequest implements Runnable {
             String result = stringBuilder.toString();
             if (!TextUtils.isEmpty(result)) {
                 if (mCallback != null) {
-                    mCallback.onSuccess(result, mURLData.getUrl() + "?" + getParamters(), mURLData.getExpires());
+                    mCallback.onSuccess(result, mAPIData.getUrl() + "?" + getParamters(), mAPIData.getExpires());
                 } else {
                     mCallback.onFail("获取结果出错");
                 }

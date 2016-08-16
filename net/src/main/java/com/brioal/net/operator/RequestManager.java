@@ -8,24 +8,24 @@ import java.util.List;
  */
 
 public class RequestManager {
-    private static List<HttpRequest> mHttpRequests;
+    private static List<APIRequest> sMAPIRequests;
 
     //添加请求
-    public static void addRequest(HttpRequest request) {
-        if (mHttpRequests == null) {
-            mHttpRequests = new ArrayList<>();
+    public static void addRequest(APIRequest request) {
+        if (sMAPIRequests == null) {
+            sMAPIRequests = new ArrayList<>();
         }
-        mHttpRequests.add(request);
+        sMAPIRequests.add(request);
     }
 
     //取消所有请求
     public void cancelRequest() {
-        if (mHttpRequests != null && mHttpRequests.size() > 0) {
-            for (int i = 0; i < mHttpRequests.size(); i++) {
-                mHttpRequests.get(i).stop();
+        if (sMAPIRequests != null && sMAPIRequests.size() > 0) {
+            for (int i = 0; i < sMAPIRequests.size(); i++) {
+                sMAPIRequests.get(i).stop();
             }
         }
-        mHttpRequests.clear();
+        sMAPIRequests.clear();
     }
 
 

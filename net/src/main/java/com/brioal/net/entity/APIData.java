@@ -5,13 +5,13 @@ package com.brioal.net.entity;
  * Created by Brioal on 2016/8/13.
  */
 
-public class URLData {
+public class APIData {
     private String mKey;
     private long mExpires;
     private boolean isGet;
     private String mUrl;
 
-    public URLData(String key, long expires, boolean netType, String url) {
+    public APIData(String key, long expires, boolean netType, String url) {
         mKey = key;
         mExpires = expires;
         isGet = netType;
