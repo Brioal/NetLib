@@ -53,13 +53,20 @@ public class APIRequest implements Runnable {
 
     @Override
     public void run() { //缓存时间内获取本地缓存
-        try {
-            String json = CacheManager.getInstance().getCache(mAPIData.getUrl() + "?" + getParamters(), true);
-            if (json != null) {
-                mCallback.onSuccess(json, mAPIData.getUrl() + "?" + getParamters(), mAPIData.getExpires());
-                Log.i("Run", "return cache");
-                return;
+        if (mAPIData.getExpires() != 0) {
+            try {
+                String json = CacheManager.getInstance().getCache(mAPIData.getUrl() + "?" + getParamters(), true);
+                if (json != null) {
+                    mCallback.onSuccess(json, mAPIData.getUrl() + "?" + getParamters(), mAPIData.getExpires());
+                    Log.i("Run", "return cache");
+                    return;
+                }
+            } catch (Exception e) {
+
             }
+        }
+        try {
+
             String params = getParamters();
             mURL = new URL(mAPIData.getUrl());
             mConnection = (HttpURLConnection) mURL.openConnection();
