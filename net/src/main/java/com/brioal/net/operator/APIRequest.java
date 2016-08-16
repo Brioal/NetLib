@@ -71,8 +71,9 @@ public class APIRequest implements Runnable {
             mConnection.setDoOutput(true);
             mConnection.setConnectTimeout(5000);
             mConnection.setReadTimeout(5000);
-           mConnection.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-           mConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
+            mConnection.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            mConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
+            HttpConnctionSetUp(mConnection);
             if (mAPIData.isGet()) {
                 mConnection.setRequestMethod("GET");
             } else {
@@ -123,6 +124,10 @@ public class APIRequest implements Runnable {
                 });
             }
         }
+    }
+
+    protected void HttpConnctionSetUp(HttpURLConnection connection) {
+
     }
 
 
