@@ -1,6 +1,7 @@
 package com.brioal.net.operator;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -65,6 +66,8 @@ public class APIRequest implements Runnable {
 
             }
         }
+        Looper.prepare();
+
         try {
             mURL = new URL(mAPIData.getUrl());
             mConnection = (HttpURLConnection) mURL.openConnection();
@@ -124,6 +127,7 @@ public class APIRequest implements Runnable {
                 });
             }
         }
+        Looper.loop();
     }
 
     protected void HttpConnctionSetUp(HttpURLConnection connection) {
